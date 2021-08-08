@@ -17,5 +17,6 @@ class ExamDetailView(LoginRequiredMixin, DetailView):
     context_object_name = 'exam'
     pk_url_kwarg = 'uuid'
 
-    # def get_object(self, queryset=None):
-    #     pass
+    def get_object(self, queryset=None):
+        uuid = self.kwargs.get('uuid')
+        return self.get_queryset().get(uuid=uuid)
