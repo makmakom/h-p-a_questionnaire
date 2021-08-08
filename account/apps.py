@@ -12,3 +12,6 @@ class AccountConfig(AppConfig):
 
 def user_registered_dispatcher(sender, **kwargs):
     send_activation_notification(kwargs['instance'])
+
+
+user_registered.connect(user_registered_dispatcher)

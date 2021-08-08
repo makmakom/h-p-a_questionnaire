@@ -3,7 +3,7 @@ from django.core.signing import BadSignature
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic import CreateView, TemplateView
+from django.views.generic import CreateView, TemplateView, UpdateView
 from .utils import signer
 
 from account.forms import AccountRegistrationForm
@@ -12,7 +12,7 @@ from account.forms import AccountRegistrationForm
 class AccountRegistrationView(CreateView):
     model = get_user_model()
     template_name = 'account/registration.html'
-    success_url = reverse_lazy('accounts:registration_done')
+    success_url = reverse_lazy('account:registration_done')
     form_class = AccountRegistrationForm
 
 
@@ -36,3 +36,31 @@ def user_activate(request, sign):
         user.save()
 
     return render(request, template)
+
+
+class AccountLoginView(LoginView):
+    template_name = 'account/login.html'
+
+    def get_redirect_url(self):
+        if self.request.GET.get('next'):
+            return self.request.GET.get('next')
+
+        return reverse('index')
+
+
+class AccountLogoutView(LogoutView):
+    template_name = 'account/logout.html'
+
+
+def account_profile_view(request):
+    return render(request, 'account/profile.html')
+
+
+class AccountUpdateProfileView(UpdateView):
+    model = get_user_model()
+    template_name = 'account/profile_update.html'
+    success_url = reverse_lazy('account:profile')
+    form_class = None
+
+    def get_object(self, queryset=None):
+        return self.request.user
