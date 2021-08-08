@@ -40,7 +40,8 @@ INSTALLED_APPS = [
 
     'crispy_forms',
 
-    'account.apps.AccountConfig'
+    'account.apps.AccountConfig',
+    'quiz.apps.QuizConfig'
 ]
 
 MIDDLEWARE = [
