@@ -20,3 +20,14 @@ class ExamDetailView(LoginRequiredMixin, DetailView):
     def get_object(self, queryset=None):
         uuid = self.kwargs.get('uuid')
         return self.get_queryset().get(uuid=uuid)
+
+
+class ExamResultListView(LoginRequiredMixin, ListView):
+    model = Result
+    template_name = 'results/list.html'
+    context_object_name = 'results'
+    paginate_by = 5
+
+    def get_queryset(self):
+        user = self.request.user
+        return Result.objects.filter(user=user)
