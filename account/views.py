@@ -1,12 +1,12 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.views import LoginView, LogoutView
 from django.core.signing import BadSignature
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
-from django.contrib.auth.views import LoginView, LogoutView
-from django.views.generic import CreateView, TemplateView, UpdateView
+from django.views.generic import CreateView, UpdateView, TemplateView, UpdateView
 from .utils import signer
 
-from account.forms import AccountRegistrationForm
+from .forms import AccountRegistrationForm
 
 
 class AccountRegistrationView(CreateView):
